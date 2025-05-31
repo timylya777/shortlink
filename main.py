@@ -22,7 +22,7 @@ templates = Jinja2Templates(directory=os.path.join(FRONTEND_DIR, "templates"))
 url_storage = {}
 
 # Главная страница
-def normalize_url(url: str, default_scheme: str = "https") -> Optional[str]:
+def normalize_url(url: str):
     
     if not url or not isinstance(url, str):
         return None
