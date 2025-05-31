@@ -33,19 +33,24 @@
     
     <div class="container">
         <h1>Все сокращённые ссылки</h1>
-        <div class="links-list">
-            {% for short_id, original_url in links.items() %}
-            <div class="link-item">
-                <div class="link-controls">
-                    <a href="/{{ short_id }}" class="short-url" target="_blank">http://shortlink-s4v6.onrender.com//{{ short_id }}</a>
-                    <button class="copy-btn" onclick="copyToClipboard('http://shortlink-s4v6.onrender.com//{{ short_id }}')">
-                        <i class="fas fa-copy"></i> Копировать
-                    </button>
-                </div>
-                <div class="original-url">→ {{ original_url }}</div>
-            </div>
-            {% endfor %}
-        </div>
+        <h2>Всего ссылок: {{ total_links }}</h2>
+
+<div class="links-list">
+  {% for link in links %}
+    <div class="link-item">
+      <div class="link-controls">
+        <a href="/{{ link.short_id }}" class="short-url" target="_blank">
+          {{ request.base_url }}{{ link.short_id }}
+        </a>
+        <span class="click-count">{{ link.click_count }} кликов</span>
+        <button class="copy-btn" onclick="copyToClipboard('{{ request.base_url }}{{ link.short_id }}')">
+          <i class="fas fa-copy"></i> Копировать
+        </button>
+      </div>
+      <div class="original-url">→ {{ link.original_url }}</div>
+    </div>
+  {% endfor %}
+</div>
     </div>
     <script src="/static/script.js"></script>
 </body>
