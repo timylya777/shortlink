@@ -22,6 +22,34 @@ templates = Jinja2Templates(directory=os.path.join(FRONTEND_DIR, "templates"))
 url_storage = {}
 
 # Главная страница
+def normalize_url(url: str, default_scheme: str = "https") -> Optional[str]:
+    
+    if not url or not isinstance(url, str):
+        return None
+    
+    # Удаляем случайные пробелы
+    url = url.strip()
+    
+    # Если URL уже содержит схему (http://, https://, content:// и т.д.)
+    if '://' in url:
+        parsed = urlparse(url)
+        if all([parsed.scheme, parsed.netloc]):
+            return url
+        return None
+    
+    # Если URL начинается с домена (example.com)
+    if '.' in url and not url.startswith(('http', 'ftp', 'content')):
+        # Добавляем стандартную схему
+        return f"{default_scheme}://{url}"
+    
+    # Для специальных URI (content://, file:// и т.д.)
+    if ':/' in url and not url.startswith(('http', 'ftp')):
+        # Заменяем :/ на :// для корректного парсинга
+        if not url.startswith(('content', 'file', 'ftp')):
+            return None
+        return url.replace(':/', '://', 1)
+    
+    return None
 @app.get("/")
 async def read_root(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
@@ -41,7 +69,7 @@ async def show_all(request: Request):
 @app.post("/shorten")
 async def shorten_url(request: Request):
     data = await request.json()
-    original_url = data.get("original_url")
+    original_url = normalize_url(data.get("original_url"))
     
     if not original_url:
         return {"error": "URL is required"}
