@@ -23,7 +23,7 @@ url_storage = {}
 
 # Главная страница
 def normalize_url(url: str):
-    
+    default_scheme = "https://"
     if not url or not isinstance(url, str):
         return None
     
