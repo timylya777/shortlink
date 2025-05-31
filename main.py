@@ -55,5 +55,14 @@ async def shorten_url(request: Request):
 @app.get("/{short_id}")
 async def redirect(short_id: str):
     if short_id not in url_storage:
-        return {"error": "Link not found"}
-    return {"redirect_to": url_storage[short_id]}
+        raise HTTPException(
+            status_code=404,
+            detail="Short link not found",
+            headers={"X-Error": "Link not found"}
+        )
+    
+    target_url = url_storage[short_id]
+    return RedirectResponse(
+        url=target_url,
+        status_code=307  # Temporary Redirect (сохраняет метод запроса)
+    )
