@@ -82,10 +82,19 @@ async def about_page(request: Request):
 @app.get("/all")
 async def show_all(request: Request):
     with db_connection() as conn:
-        links = conn.execute("SELECT short_id, original_url FROM links ORDER BY created_at DESC").fetchall()
+        links = conn.execute("""
+            SELECT short_id, original_url, click_count 
+            FROM links 
+            ORDER BY created_at DESC
+        """).fetchall()
+    
     return templates.TemplateResponse(
         "all_links.html",
-        {"request": request, "links": [dict(link) for link in links]}
+        {
+            "request": request, 
+            "links": [dict(link) for link in links],
+            "total_links": len(links)
+        }
     )
 
 @app.post("/shorten")
