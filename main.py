@@ -48,7 +48,7 @@ async def shorten_url(request: Request):
     url_storage[short_id] = original_url
     
     return {
-        "short_url": f"http://{request.client.host}:8000/{short_id}",
+        "short_url": f"http://shortlink-s4v6.onrender.com/{short_id}",
         "original_url": original_url
     }
 
