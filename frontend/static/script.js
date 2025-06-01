@@ -20,6 +20,32 @@ function applyTheme(theme) {
         text.textContent = 'Тёмная';
     }
 }
+// Регистрация
+await fetch('/register', {
+  method: 'POST',
+  headers: {'Content-Type': 'application/json'},
+  body: JSON.stringify({
+    username: 'test',
+    password: 'test123',
+    email: 'test@example.com'
+  })
+});
+
+// Вход
+await fetch('/login', {
+  method: 'POST',
+  headers: {'Content-Type': 'application/json'},
+  body: JSON.stringify({
+    username: 'test',
+    password: 'test123'
+  }),
+  credentials: 'include'
+});
+
+// Проверка авторизации
+await fetch('/me', {
+  credentials: 'include'
+});
 
 // Переключаем тему
 function toggleTheme() {
