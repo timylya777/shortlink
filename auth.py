@@ -8,7 +8,7 @@ from typing import Optional
 from database import db_connection
 from models import User, Session
 from schemas import UserCreate, UserLogin
-from dependencies import get_current_user
+
 router = APIRouter(prefix="/auth", tags=["auth"])
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
