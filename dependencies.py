@@ -1,7 +1,7 @@
 from fastapi import Request, HTTPException, Depends
 from typing import Optional
-from .models import User
-from .database import db_connection
+from models import User
+from database import db_connection
 
 def get_current_user(request: Request) -> Optional[User]:
     session_token = request.cookies.get("session_token")
