@@ -5,9 +5,9 @@ import secrets
 from passlib.context import CryptContext
 from typing import Optional
 
-from .database import db_connection
-from .models import User, Session
-from .schemas import UserCreate, UserLogin
+from database import db_connection
+from models import User, Session
+from schemas import UserCreate, UserLogin
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
