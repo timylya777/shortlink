@@ -5,4 +5,4 @@ python-multipart==0.0.6
 jinja2
 passlib 
 bcrypt
-python-multipar
+python-multipart
